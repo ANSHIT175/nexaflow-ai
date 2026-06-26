@@ -1,0 +1,264 @@
+/* Text Gradient Utility */
+.text-gradient {
+  background: linear-gradient(135deg, #ffc801 0%, #ffdb58 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  /* Navbar adjustments */
+  header {
+    padding: 0.75rem 0;
+  }
+
+  /* Hero section padding for navbar overlap prevention */
+  #hero {
+    padding-top: 5rem;
+  }
+
+  /* Ensure buttons have proper spacing on mobile */
+  button {
+    transition: all 0.2s ease;
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+
+  /* Pricing cards mobile layout */
+  .grid {
+    gap: 1rem;
+  }
+
+  /* Ensure text is readable on mobile */
+  h1 {
+    font-size: 1.875rem;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+  }
+
+  /* Mobile button styling - ensure visibility */
+  button {
+    min-height: 2.5rem;
+    font-size: 0.875rem;
+  }
+
+  /* Navbar buttons mobile styling */
+  header button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  /* Pricing section controls */
+  .flex.gap-2 {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Stats grid mobile */
+  .grid.grid-cols-2 {
+    gap: 1rem;
+  }
+
+  .grid.grid-cols-2 > div {
+    text-align: center;
+  }
+
+  .grid.grid-cols-2 .text-3xl {
+    font-size: 1.5rem;
+  }
+
+  /* Feature cards mobile */
+  .grid.grid-cols-1 > div {
+    padding: 1.5rem;
+  }
+
+  /* Testimonial cards mobile */
+  .grid.grid-cols-1 .p-8 {
+    padding: 1.5rem;
+  }
+
+  /* Footer mobile */
+  footer .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  #hero {
+    padding-top: 6rem;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1024px) {
+  #hero {
+    padding-top: 8rem;
+  }
+
+  /* Smooth transitions for desktop */
+  button {
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Card hover effects */
+  .border.border-gray-800:hover {
+    box-shadow: 0 20px 40px rgba(255, 203, 1, 0.1);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states for keyboard navigation */
+button:focus-visible {
+  outline: 2px solid #ffc801;
+  outline-offset: 2px;
+}
+
+a:focus-visible {
+  outline: 2px solid #ffc801;
+  outline-offset: 2px;
+}
+
+/* Ensure navbar buttons are properly styled on all screen sizes */
+header button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mobile navbar button styling - dark cinematic theme */
+@media (max-width: 640px) {
+  header button:not(:last-child) {
+    background-color: transparent;
+    border: 1px solid rgba(255, 203, 1, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    color: white;
+    transition: all 0.2s ease;
+  }
+
+  header button:not(:last-child):hover {
+    background-color: rgba(255, 203, 1, 0.1);
+    border-color: rgba(255, 203, 1, 0.6);
+    color: #ffc801;
+    box-shadow: 0 0 12px rgba(255, 203, 1, 0.2);
+  }
+
+  /* Last button (Get Started) styling */
+  header button:last-child {
+    background: linear-gradient(135deg, #ffc801, #ffdb58);
+    color: black;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+  }
+
+  header button:last-child:hover {
+    box-shadow: 0 0 16px rgba(255, 203, 1, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+/* Pricing card spacing fix */
+.pricing-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Ensure hero badge doesn't hide behind navbar */
+#hero > div:first-child {
+  position: relative;
+  z-index: 10;
+}
+
+/* Premium pricing card styling */
+.pricing-card-featured {
+  position: relative;
+}
+
+.pricing-card-featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 203, 1, 0.05), rgba(255, 203, 1, 0.02));
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Mobile pricing card alignment */
+@media (max-width: 768px) {
+  .pricing-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .pricing-card {
+    width: 100%;
+  }
+
+  /* Ensure pricing card text is aligned properly */
+  .pricing-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-card .price {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .pricing-card ul {
+    font-size: 0.875rem;
+  }
+}
+
+/* Prevent "Made with Manus" badge visibility */
+[data-manus-content-root],
+.manus-badge,
+.made-with-manus {
+  display: none !important;
+}
+
+/* Smooth scroll anchor offset for fixed header */
+html {
+  scroll-padding-top: 80px;
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 60px;
+  }
+}

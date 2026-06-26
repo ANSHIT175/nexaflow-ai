@@ -1,364 +1,339 @@
-# NexaFlow AI - Premium Data Automation Platform
+# NexaFlow - Next-Gen AI Platform
 
-## Project Overview
+A premium, cinematic landing page and SaaS platform for enterprise data automation with integrated payment processing, user authentication, and subscription management.
 
-NexaFlow AI is a competition-winning, premium SaaS landing page for an advanced AI-driven data automation platform. Built with React + Vite, featuring a dark theme, responsive design, and enterprise-grade features.
+## 🚀 Features
 
-## 🎨 Premium Visual Enhancements
+### Frontend
+- **Premium Dark Theme** - Cinematic design with animated particles and gradient effects
+- **Responsive Design** - Mobile-first approach with smooth animations
+- **Smooth Scrolling** - Navigation links with smooth scroll behavior
+- **Payment Modal** - Beautiful popup with multiple payment methods (Card, Google Pay, UPI)
+- **Currency Switcher** - Support for USD, INR, EUR
+- **Billing Toggle** - Monthly/Annual plans with 20% discount
+- **User Dashboard** - Profile management and subscription tracking
+- **Hero Section** - Animated particles background with compelling CTAs
 
-### Latest Visual Polish Improvements
-- Cinematic hero with floating light sources
-- Glassmorphism effects on all cards
-- Glow accents on interactive elements
-- Subtle grid background pattern
-- Enhanced shadows for depth
-- Popular badge on pricing tier
-- Smooth 200-400ms motion
+### Backend & Authentication
+- **Google OAuth Integration** - Seamless Gmail login
+- **Stripe Payment Processing** - Secure payment handling with webhook support
+- **User Management** - Database-backed user profiles and roles
+- **Session Management** - Secure cookie-based authentication
 
-## Features Implemented
+### Sections
+1. **Hero** - Eye-catching headline with stats
+2. **Features** - 6 key features with icons
+3. **Pricing** - 3 pricing tiers with flexible billing
+4. **Testimonials** - Social proof with customer quotes
+5. **Dashboard** - User profile and subscription management
 
-### ✅ All 22 Mandatory Checks
+## 📋 Tech Stack
 
-1. **npm install works** - Clean dependency installation with React + Vite
-2. **npm run dev works** - Vite dev server with hot reload
-3. **npm run build works** - Production build optimization
-4. **No banned libraries** - Only React, React DOM, Vite (NO Shadcn, Radix, Framer Motion, etc.)
-5. **Official color palette used** - All 6 official colors as CSS variables
-6. **JetBrains Mono and Inter fonts** - Proper font usage for headings and body text
-7. **Pricing calculated dynamically** - From config/matrix, not hardcoded
-8. **INR/USD/EUR switch works** - Currency switcher with live price updates
-9. **Monthly/Annual toggle works** - Billing period toggle with discount
-10. **20% annual discount works** - Applied automatically from pricing config
-11. **No hardcoded pricing in JSX** - All prices calculated from PRICING_CONFIG
-12. **Bento Grid on desktop** - 6-card responsive grid layout
-13. **Accordion on mobile** - Touch-friendly accordion interface
-14. **Active feature index preserved** - State persists during resize
-15. **No unnecessary global re-renders** - Memoized calculations, isolated state
-16. **Semantic HTML** - Proper header, nav, main, section, footer tags
-17. **SEO meta and OG tags** - Complete meta tags in index.html
-18. **Accessibility alt text** - All images have alt text or aria-hidden
-19. **No horizontal scroll** - Fully responsive, no overflow issues
-20. **Motion timing follows constraints** - 150-200ms micro-interactions, 300-400ms layout transitions
-21. **Provided assets used properly** - Official colors and fonts applied throughout
-22. **Vercel deployment ready** - No build errors, optimized for deployment
+- **Frontend**: React 19, TypeScript, Tailwind CSS 4
+- **Backend**: Express.js, tRPC, Node.js
+- **Database**: MySQL/TiDB with Drizzle ORM
+- **Payment**: Stripe
+- **Authentication**: Manus OAuth (Google)
+- **Styling**: Tailwind CSS with custom animations
+- **Build Tool**: Vite
 
-## Tech Stack
-
-- **Frontend**: React 19.2.1
-- **Build Tool**: Vite 7.3.6
-- **Styling**: Custom CSS with official color palette
-- **Fonts**: JetBrains Mono + Inter (Google Fonts)
-- **State Management**: React hooks (useState, useMemo)
-- **Responsive**: Mobile-first design (360px, 768px, 1024px, 1440px)
-
-## Official Color Palette
-
-```css
---color-arctic-powder: #F1F6F4      /* Light text/accents */
---color-forsythia: #FFCB01          /* Primary accent (yellow) */
---color-nocturnal: #114C5A          /* Dark blue */
---color-mystic-mint: #D9E8E2        /* Light mint */
---color-deep-saffron: #FF9932       /* Orange accent */
---color-oceanic-noir: #172B36       /* Main dark background */
-```
-
-## Official Fonts
-
-- **JetBrains Mono**: Headings, labels, pricing, technical text
-- **Inter**: Body text, buttons, UI elements
-
-## Pricing Logic
-
-### Configuration Matrix
-
-The pricing system uses a single source of truth configuration:
-
-```typescript
-PRICING_CONFIG = {
-  tiers: [
-    { id: 'starter', name: 'Starter', baseMonthlyUSD: 99, ... },
-    { id: 'professional', name: 'Professional', baseMonthlyUSD: 299, popular: true, ... },
-    { id: 'enterprise', name: 'Enterprise', baseMonthlyUSD: 999, ... }
-  ],
-  currencies: {
-    USD: { symbol: '$', rate: 1 },
-    INR: { symbol: '₹', rate: 83 },
-    EUR: { symbol: '€', rate: 0.92 }
-  },
-  discountAnnual: 0.2  // 20% discount
-}
-```
-
-### Price Calculation
-
-```typescript
-function calculatePrice(tierId, currency, billingPeriod) {
-  1. Get tier base monthly price in USD
-  2. Convert to target currency using rate
-  3. If annual: multiply by 12, then apply 20% discount
-  4. Return rounded price
-}
-```
-
-### State Isolation
-
-- Pricing state (currency, billingPeriod) is isolated in App component
-- Calculations are memoized with useMemo to prevent unnecessary recalculations
-- Only pricing text nodes update when currency/period changes
-
-## Bento-to-Accordion State Preservation
-
-### Desktop (Bento Grid)
-
-- 6 feature cards in responsive grid layout
-- First card spans 2x2 (larger)
-- Click any card to set `activeFeature` index
-- Active card shows highlight and additional details
-
-### Mobile (Accordion)
-
-- Same 6 features transform to accordion
-- Active feature index is preserved from desktop
-- If user selects feature 3 on desktop, then resizes to mobile, feature 3 remains open
-- Click accordion header to toggle open/close
-
-### Implementation
-
-```typescript
-const [activeFeature, setActiveFeature] = useState(0)
-
-// Desktop: Bento Grid
-{!isMobile && (
-  <div className="bento-grid">
-    {FEATURES.map((feature, idx) => (
-      <div
-        className={`bento-item ${activeFeature === idx ? 'active' : ''}`}
-        onClick={() => setActiveFeature(idx)}
-      >
-        {/* Feature content */}
-      </div>
-    ))}
-  </div>
-)}
-
-// Mobile: Accordion
-{isMobile && (
-  <div>
-    {FEATURES.map((feature, idx) => (
-      <div className={`accordion-item ${activeFeature === idx ? 'active' : ''}`}>
-        <div onClick={() => setActiveFeature(idx)}>
-          {/* Feature content */}
-        </div>
-      </div>
-    ))}
-  </div>
-)}
-```
-
-## Sections
-
-### 1. Header / Navbar
-- Sticky positioning
-- Logo with official colors
-- Navigation links
-- Sign In and Get Started buttons
-- Mobile hamburger menu (responsive)
-
-### 2. Hero Section
-- Large powerful headline with gradient text
-- Strong subheading
-- Two CTA buttons (Primary + Secondary)
-- Trust metrics (500+ companies, 10M+ workflows, 99.9% uptime)
-- Animated background with pulse effect
-- Entry animation completes within 500ms
-
-### 3. Feature Showcase
-- **Desktop**: Bento Grid (6 cards, first card 2x2)
-- **Mobile**: Accordion (touch-friendly)
-- Active feature index preserved during resize
-- Hover effects and transitions
-- Smooth animations (300ms ease-out)
-
-### 4. Pricing Section
-- 3 pricing tiers (Starter, Professional, Enterprise)
-- Currency switcher (USD, INR, EUR)
-- Monthly/Annual toggle
-- 20% annual discount applied automatically
-- Dynamic price calculations from config
-- Popular tier highlighted
-- Feature list for each tier
-
-### 5. Social Proof Section
-- 3 testimonials from industry leaders
-- Crawlable text (not images)
-- Professional styling
-- Trust metrics display
-
-### 6. Footer
-- Company info
-- Copyright notice
-- Links to legal pages
-
-## Setup Commands
-
-```bash
-# Install dependencies
-npm install
-# or
-pnpm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-## Vercel Deployment
+## 🛠️ Installation & Setup
 
 ### Prerequisites
-- Vercel account
-- Git repository
+- Node.js 22+
+- pnpm (package manager)
+- MySQL database
+- Stripe account (for payments)
 
-### Steps
+### 1. Clone & Install Dependencies
+```bash
+cd nexaflow-fix
+pnpm install
+```
 
-1. **Connect Repository**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git push origin main
-   ```
+### 2. Environment Variables
+Create a `.env` file with:
+```
+DATABASE_URL=mysql://user:password@localhost:3306/nexaflow
+JWT_SECRET=your_jwt_secret_key
+VITE_APP_ID=your_manus_app_id
+OAUTH_SERVER_URL=https://api.manus.im
+VITE_OAUTH_PORTAL_URL=https://oauth.manus.im
+STRIPE_SECRET_KEY=sk_test_your_stripe_key
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_key
+STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+```
 
-2. **Deploy to Vercel**
-   - Go to https://vercel.com/new
-   - Import the repository
-   - Framework: Vite
-   - Root Directory: (default)
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-   - Click Deploy
+### 3. Database Setup
+```bash
+pnpm db:push
+```
 
-3. **Environment Variables**
-   - No environment variables required for this project
+### 4. Start Development Server
+```bash
+pnpm dev
+```
 
-4. **Custom Domain** (optional)
-   - Go to project settings
-   - Add custom domain
-   - Update DNS records
+Server runs on `http://localhost:3000`
 
-## Responsive Breakpoints
+### 5. Build for Production
+```bash
+pnpm build
+pnpm start
+```
 
-- **Mobile**: 360px - 767px (Accordion layout)
-- **Tablet**: 768px - 1023px (Transitional)
-- **Laptop**: 1024px - 1439px (Bento Grid)
-- **Desktop**: 1440px+ (Full Bento Grid)
-
-## Motion & Animations
-
-### Timing
-
-- **Micro-interactions**: 150-200ms ease-out
-- **Layout transitions**: 300-400ms ease-in-out
-- **Entry animations**: Complete within 500ms
-
-### CSS Animations
-
-- `fade-in`: Opacity transition
-- `slide-in-up`: Slide up with fade
-- `slide-in-down`: Slide down with fade
-- `scale-in`: Scale from 0.95 to 1
-- Delay utilities: 100ms, 200ms, 300ms, 400ms
-
-## Visual Design Implementation
-
-### Glassmorphism
-- Backdrop blur: 10-20px
-- Background opacity: 0.05-0.15
-- Multi-layer shadows for depth
-
-### Glow Effects
-- Text shadows: 20-40px with Forsythia color
-- Box shadows: Luminous accents on hover
-- Filter effects: Drop shadows on text
-
-### Motion
-- Button hover: 200ms with elevation
-- Card hover: 300ms with glow
-- Entrance: 1s staggered animations
-
-## Performance Optimizations
-
-- Memoized pricing calculations
-- Isolated component state
-- No global re-renders on feature selection
-- Optimized CSS with minimal specificity
-- Production build: ~406KB JS, ~13KB CSS (gzipped: 120KB, 3.1KB)
-
-## Submission Checklist
-
-- [x] npm install works
-- [x] npm run dev works
-- [x] npm run build works
-- [x] No banned libraries (Shadcn, Radix, Framer Motion, etc.)
-- [x] Official colors used exactly
-- [x] JetBrains Mono + Inter fonts applied
-- [x] Pricing from config/matrix (not hardcoded)
-- [x] INR/USD/EUR currency switcher works
-- [x] Monthly/Annual toggle works
-- [x] 20% annual discount applied
-- [x] Bento Grid on desktop
-- [x] Accordion on mobile
-- [x] Active feature index preserved
-- [x] No unnecessary re-renders
-- [x] Semantic HTML structure
-- [x] SEO meta + OG tags
-- [x] Accessibility alt text
-- [x] No horizontal scroll
-- [x] Motion timing correct
-- [x] Official assets used
-- [x] Vercel deployment ready
-- [x] Target quality: 95+/100
-
-## File Structure
+## 📁 Project Structure
 
 ```
-nexaflow-ai/
-├── client/
-│   ├── index.html          # Entry HTML with SEO tags
+nexaflow-fix/
+├── client/                    # Frontend React application
 │   ├── src/
-│   │   ├── main.tsx        # React entry point
-│   │   ├── App.tsx         # Main app component
-│   │   ├── styles.css      # Global styles with official colors
-│   │   └── data.ts         # Pricing config + features data
-│   └── public/             # Static assets
-├── vite.config.ts          # Vite configuration
-├── tsconfig.json           # TypeScript config
-├── package.json            # Dependencies
-└── README.md               # This file
+│   │   ├── pages/            # Page components (Home, Dashboard)
+│   │   ├── components/       # Reusable UI components
+│   │   ├── _core/hooks/      # Custom hooks (useAuth)
+│   │   ├── App.tsx           # Main app with routing
+│   │   ├── App.css           # Global styles
+│   │   └── AnimatedParticles.tsx  # Hero animation
+│   └── index.html            # HTML entry point
+├── server/                    # Backend Express server
+│   ├── routers.ts            # tRPC procedure definitions
+│   ├── db.ts                 # Database queries
+│   ├── products.ts           # Stripe product configuration
+│   ├── storage.ts            # S3 storage helpers
+│   └── _core/                # Core server utilities
+├── drizzle/                  # Database schema & migrations
+│   └── schema.ts             # User and subscription tables
+├── shared/                   # Shared types and constants
+└── package.json              # Dependencies and scripts
 ```
 
-## Design Specifications Followed
+## 🎨 Key Components
 
-- Dark cinematic AI SaaS aesthetic
-- Official color palette used throughout
-- JetBrains Mono + Inter fonts
-- CSS-only visual effects (no external libraries)
-- All pricing calculations dynamic from config
-- Feature state preserved during resize
-- Professional motion timing
-- Fully responsive and mobile-first
-- Production-ready and Vercel-compatible
+### PaymentModal.tsx
+Beautiful modal for payment processing with:
+- Plan summary display
+- Multiple payment method options
+- Secure payment form
 
-## Support
+### Home.tsx
+Landing page with:
+- Sticky navigation with smooth scroll
+- Hero section with animated particles
+- Features grid (6 features)
+- Pricing section with currency switcher
+- Testimonials carousel
+- Footer with links
 
-For questions or issues, please refer to the official specification document.
+### Dashboard.tsx
+User dashboard featuring:
+- Profile information display
+- Active subscription details
+- Payment history table
+- Action buttons (Upgrade, Download Invoice, Support)
+
+## 💳 Stripe Integration
+
+### Payment Flow
+1. User clicks "Upgrade Now" on pricing card
+2. Payment modal appears with plan details
+3. User selects payment method (Card/Google Pay/UPI)
+4. Checkout session created on backend
+5. Redirects to Stripe checkout
+6. Webhook confirms payment
+7. User subscription updated
+
+### Testing
+- **Test Card**: 4242 4242 4242 4242
+- **Expiry**: Any future date
+- **CVC**: Any 3 digits
+
+## 🔐 Authentication Flow
+
+1. User clicks "Sign In" button
+2. Redirects to Manus OAuth login
+3. User authenticates with Gmail
+4. OAuth callback creates/updates user in database
+5. Session cookie set
+6. User redirected to dashboard
+
+## 📊 Database Schema
+
+### Users Table
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  openId VARCHAR(64) UNIQUE NOT NULL,
+  name TEXT,
+  email VARCHAR(320),
+  loginMethod VARCHAR(64),
+  role ENUM('user', 'admin') DEFAULT 'user',
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  lastSignedIn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## 🚀 Deployment
+
+### Manus Platform (Recommended)
+1. Click "Publish" in Management UI
+2. Configure custom domain (optional)
+3. Website goes live automatically
+
+### External Hosting
+The project can be deployed to:
+- Vercel
+- Netlify
+- Railway
+- Render
+- AWS
+
+## 📱 Responsive Design
+
+- **Mobile**: Optimized for 375px+ screens
+- **Tablet**: Enhanced layout for 768px+ screens
+- **Desktop**: Full experience on 1280px+ screens
+
+All buttons styled with premium dark theme on mobile—no white boxes!
+
+## 🎯 Features Breakdown
+
+### Hero Section
+- Animated particle background
+- Gradient text effects
+- CTA buttons with hover effects
+- Stats grid (6 metrics)
+
+### Features Section
+- 6 feature cards with icons
+- Hover effects with glow
+- Responsive grid layout
+
+### Pricing Section
+- 3 pricing tiers
+- Currency switcher (USD/INR/EUR)
+- Monthly/Annual toggle (20% discount)
+- Payment modal integration
+- "Popular" badge on Professional plan
+
+### Testimonials
+- 3 customer testimonials
+- Quote styling
+- Author and role display
+
+### User Dashboard
+- Profile card with user info
+- Subscription status with renewal date
+- Payment history table
+- Action buttons
+
+## 🔧 Customization
+
+### Colors
+Edit `client/src/index.css` for theme colors:
+```css
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --yellow-accent: 45 96% 56%;
+  }
+}
+```
+
+### Pricing Plans
+Edit `Home.tsx` pricing section:
+```tsx
+const prices = {
+  USD: { starter: 99, professional: 299, enterprise: 999 },
+  INR: { starter: 8250, professional: 24900, enterprise: 83250 },
+  EUR: { starter: 89, professional: 269, enterprise: 899 },
+};
+```
+
+### Features
+Modify features grid in `Home.tsx`:
+```tsx
+{
+  icon: '⚡',
+  title: 'Feature Title',
+  desc: 'Feature description',
+}
+```
+
+## 📝 Scripts
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm check        # TypeScript type check
+pnpm test         # Run tests with Vitest
+pnpm format       # Format code with Prettier
+pnpm db:push      # Push database migrations
+```
+
+## 🐛 Troubleshooting
+
+### Payment Modal Not Showing
+- Ensure `PaymentModal.tsx` is imported in `Home.tsx`
+- Check browser console for errors
+- Verify Stripe keys are set correctly
+
+### Smooth Scroll Not Working
+- Check that section IDs match button onClick handlers
+- Ensure smooth scroll is enabled in browser
+- Verify no CSS is preventing scroll behavior
+
+### Mobile Buttons Look Ugly
+- Check Tailwind CSS is properly compiled
+- Verify mobile breakpoints in CSS
+- Clear browser cache and rebuild
+
+### Database Connection Error
+- Verify `DATABASE_URL` environment variable
+- Check MySQL server is running
+- Ensure database exists and user has permissions
+
+## 📞 Support
+
+For issues or questions:
+1. Check `.manus-logs/` for error details
+2. Review browser console for client-side errors
+3. Check server logs for backend errors
+4. Verify all environment variables are set
+
+## 📄 License
+
+MIT License - Feel free to use and modify
+
+## 🎉 What's Included
+
+✅ Complete landing page with hero section  
+✅ Premium dark cinematic theme  
+✅ Smooth scroll navigation  
+✅ Payment modal with multiple methods  
+✅ User authentication (Google OAuth)  
+✅ Stripe payment integration  
+✅ User dashboard with subscription management  
+✅ Responsive mobile design  
+✅ Currency switcher (USD/INR/EUR)  
+✅ Monthly/Annual billing toggle  
+✅ Database schema with Drizzle ORM  
+✅ TypeScript for type safety  
+✅ Production-ready code  
+
+## 🚀 Next Steps
+
+1. **Customize Content** - Update company name, features, pricing
+2. **Add Email Marketing** - Integrate Mailchimp or SendGrid
+3. **Setup Analytics** - Add Mixpanel or Amplitude tracking
+4. **Add Blog** - Create blog section for content marketing
+5. **Implement Live Chat** - Add customer support widget
+6. **Setup CDN** - Use Cloudflare for faster delivery
 
 ---
 
-**Built for**: Next-Gen AI Platform Speed Run Competition
-**Target Score**: 95+/100
-**Status**: ✅ Complete and Ready for Deployment
+**Live Demo**: https://nexaflowai-5yqt9uxc.manus.space
+
+**Built with ❤️ using Manus Platform**
