@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { PRICING_CONFIG, calculatePrice, FEATURES, TESTIMONIALS } from './data'
 
 export default function App() {
@@ -26,6 +26,25 @@ export default function App() {
 
   const currencySymbol = PRICING_CONFIG.currencies[currency as keyof typeof PRICING_CONFIG.currencies].symbol
 
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    setTimeout(() => {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
+
+  // Button handlers
+  const handleSignIn = () => {
+    alert('Sign in coming soon')
+  }
+
+  const handleGetStarted = () => {
+    alert('Thanks for your interest!')
+  }
+
   return (
     <div>
       {/* Header */}
@@ -34,13 +53,13 @@ export default function App() {
           <nav>
             <div className="logo">NexaFlow</div>
             <div className="nav-links hide-mobile">
-              <a href="#features">Features</a>
-              <a href="#pricing">Pricing</a>
-              <a href="#testimonials">Testimonials</a>
+              <a href="#features" onClick={(e) => { e.preventDefault(); scrollToSection('features') }}>Features</a>
+              <a href="#pricing" onClick={(e) => { e.preventDefault(); scrollToSection('pricing') }}>Pricing</a>
+              <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection('testimonials') }}>Testimonials</a>
             </div>
             <div className="nav-buttons">
-              <button className="btn-secondary">Sign In</button>
-              <button className="btn-primary">Get Started</button>
+              <button className="btn-secondary" onClick={handleSignIn}>Sign In</button>
+              <button className="btn-primary" onClick={() => scrollToSection('pricing')}>Get Started</button>
             </div>
           </nav>
         </div>
@@ -52,8 +71,8 @@ export default function App() {
           <h1>Enterprise Data Automation at Scale</h1>
           <p>Automate workflows. Sync teams. Generate insights. Reduce manual work by 80%.</p>
           <div className="hero-buttons">
-            <button className="btn-primary">Start Free Trial</button>
-            <button className="btn-secondary">Watch Demo</button>
+            <button className="btn-primary" onClick={() => scrollToSection('pricing')}>Start Free Trial</button>
+            <button className="btn-secondary" onClick={() => scrollToSection('features')}>Watch Demo</button>
           </div>
           <div className="hero-stats">
             <div className="stat">
@@ -171,7 +190,7 @@ export default function App() {
                 <p className="price-period">
                   /{billingPeriod === 'monthly' ? 'month' : 'year'}
                 </p>
-                <button className="btn-primary">Get Started</button>
+                <button className="btn-primary" onClick={handleGetStarted}>Get Started</button>
                 <ul>
                   {tier.features.map((feature, idx) => (
                     <li key={idx}>{feature}</li>
